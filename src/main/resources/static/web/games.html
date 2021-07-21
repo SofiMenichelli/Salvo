@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> SALVO </title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>SALVO</h1>
+
+        <ol id="listGames">
+            <li v-for="game in games">{{game}}</li>
+        </ol>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="games.js"> </script>
+</body>
+
+</html>
