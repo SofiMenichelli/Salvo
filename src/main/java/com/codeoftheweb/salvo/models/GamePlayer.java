@@ -1,9 +1,10 @@
 package com.codeoftheweb.salvo.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -22,6 +23,9 @@ public class GamePlayer {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="player_id")
     private Player player;
+
+    @OneToMany(mappedBy="gamePlayer", fetch=FetchType.EAGER)
+    List<Ship> ships = new ArrayList<>();
 
     public GamePlayer() {
     }
@@ -58,5 +62,14 @@ public class GamePlayer {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public List<Ship> getShips() { return ships; }
+
+    public void setShips(List<Ship> ships) { this.ships = ships; }
+
+    public void addShip(Ship ship) {
+        ship.setGamePlayer(this);
+        ships.add(ship);
     }
 }

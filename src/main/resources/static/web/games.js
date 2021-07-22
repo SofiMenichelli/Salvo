@@ -2,13 +2,19 @@ const app = {
     data() {
         return {
             games: [],
+            gamePlayers: [],
 
         }
       
     },
     created() {
         axios.get("/api/games")
-        .then(res => this.games = res.data)
+        .then(res => {
+            this.games = res.data
+            this.gamePlayers = res.data[0]['Game Players']
+            console.log(this.gamePlayers)
+        }
+            )
         .catch(err => console.log(err.response.data))
     },
     methods(){

@@ -1,17 +1,18 @@
 package com.codeoftheweb.salvo;
 
-import com.codeoftheweb.salvo.models.Game;
-import com.codeoftheweb.salvo.models.GamePlayer;
-import com.codeoftheweb.salvo.models.Player;
+import com.codeoftheweb.salvo.models.*;
 import com.codeoftheweb.salvo.repositories.GamePlayerRepository;
 import com.codeoftheweb.salvo.repositories.GameRepository;
 import com.codeoftheweb.salvo.repositories.PlayerRepository;
+import com.codeoftheweb.salvo.repositories.ShipRepository;
+import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 @SpringBootApplication
 public class BatallaNavalApplication {
@@ -23,13 +24,16 @@ public class BatallaNavalApplication {
 	@Bean
 	public CommandLineRunner initData(PlayerRepository playerRepository,
 									  GameRepository gameRepository,
-									  GamePlayerRepository gamePlayerRepository
+									  GamePlayerRepository gamePlayerRepository,
+									  ShipRepository shipRepository
 									  ) {
 		return (args) -> {
 			// save a couple of customers
-			Player player1 =playerRepository.save(new Player("Sofia", "Smenichelli@hotmail.com", "1234"));
-			Player player2 = playerRepository.save(new Player("Santino", "santiPompei@hotmail.com", "5678"));
-			Player player3 = playerRepository.save(new Player("Olivia", "olita@hotmail.com", "9876"));
+			Player player1 =playerRepository.save(new Player("Jack Bauer", "j.bauer@ctu.gov", "24"));
+			Player player2 = playerRepository.save(new Player("Chloe O'Brian", "c.obrian@ctu.gov", "42"));
+			Player player3 = playerRepository.save(new Player("Kim Bauer", "kim_bauer@gmail.com", "kb"));
+			Player player4 = playerRepository.save(new Player("Tony Almeida", "t.almeida@ctu.gov", "mole"));
+
 
 			Game game1 = gameRepository.save(new Game(LocalDateTime.now()));
 			Game game2 = gameRepository.save(new Game(LocalDateTime.now().plusHours(1)));
@@ -37,6 +41,25 @@ public class BatallaNavalApplication {
 
 			GamePlayer gamePlayer = gamePlayerRepository.save(new GamePlayer(LocalDate.now(),game1, player1));
 			GamePlayer gamePlayer2 = gamePlayerRepository.save(new GamePlayer(LocalDate.now(),game1, player2));
+			GamePlayer gamePlayer3 = gamePlayerRepository.save(new GamePlayer(LocalDate.now(),game2, player1));
+			GamePlayer gamePlayer4 = gamePlayerRepository.save(new GamePlayer(LocalDate.now(),game2, player2));
+			GamePlayer gamePlayer5 = gamePlayerRepository.save(new GamePlayer(LocalDate.now(),game3, player1));
+			GamePlayer gamePlayer6 = gamePlayerRepository.save(new GamePlayer(LocalDate.now(),game3, player4));
+
+			Ship shipCarrier = shipRepository.save(new Ship(ShipType.Carrier, Arrays.asList("H2","H3","H4","H5","H6"),gamePlayer));
+			Ship shipBattleship = shipRepository.save(new Ship(ShipType.Battleship, Arrays.asList("C1","D1","E1","F1"), gamePlayer));
+			Ship shipDestroyer = shipRepository.save(new Ship(ShipType.Destroyer, Arrays.asList("H2","H3","H4"),gamePlayer));
+			Ship shipCruiser2 = shipRepository.save(new Ship(ShipType.Cruiser, Arrays.asList("A10","B10","C10"),gamePlayer2));
+			Ship shipPatrolBoat2 = shipRepository.save(new Ship(ShipType.PatrolBoat, Arrays.asList("B4","B5"), gamePlayer2));
+			Ship shipBattleship2 = shipRepository.save(new Ship(ShipType.Battleship, Arrays.asList("B4","B5","B6","B7"), gamePlayer2));
+
+			gamePlayer.addShip(shipCarrier);
+			gamePlayer.addShip(shipBattleship);
+			gamePlayer.addShip(shipDestroyer);
+
+			gamePlayer2.addShip(shipCruiser2);
+			gamePlayer2.addShip(shipPatrolBoat2);
+			gamePlayer2.addShip(shipBattleship2);
 
 		};
 	}

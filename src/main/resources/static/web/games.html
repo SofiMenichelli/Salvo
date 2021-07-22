@@ -12,8 +12,13 @@
     <div id="app">
         <h1>SALVO</h1>
 
-        <ol id="listGames">
-            <li v-for="game in games">{{game}}</li>
+        <ol> Juegos
+            <li v-for="game in games">{{game}}
+            </li>
+        </ol>
+        <hr>
+        <ol> Jugadores
+            <li v-for="player in gamePlayers">{{player.player.email}}</li>
         </ol>
 
     </div>

@@ -59,7 +59,6 @@ public class Player {
         this.password = password;
     }
 
-    @JsonIgnore
     public Set<GamePlayer> getGamePlayers() {
         return gamePlayers;
     }
