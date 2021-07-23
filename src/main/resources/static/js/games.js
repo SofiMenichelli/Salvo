@@ -3,6 +3,9 @@ const app = {
         return {
             games: [],
             gamePlayers: [],
+            game:[],
+            shipsA: [],
+            shipsB: [],
 
         }
       
@@ -16,6 +19,7 @@ const app = {
         }
             )
         .catch(err => console.log(err.response.data))
+
     },
     methods(){
 

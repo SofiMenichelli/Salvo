@@ -1,0 +1,24 @@
+table {
+    margin: auto;
+    width: 40vw;
+    height: 40vh;
+    border: 2px solid rgb(236, 109, 109);
+    border-collapse: collapse;
+}
+tr, td, th {
+    width: 3vw;
+    height: 3vh;
+    border: 3px solid rgb(243, 131, 131);
+    text-align: center;
+}
+.Ship {
+    background-color: green;
+}
+.Salvoes {
+    background-color: violet;
+    color: black;
+    font-weight: bold;
+}
+.salvoesContrincants {
+    background-color: yellow;
+}

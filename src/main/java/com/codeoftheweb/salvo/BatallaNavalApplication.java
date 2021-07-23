@@ -1,10 +1,7 @@
 package com.codeoftheweb.salvo;
 
 import com.codeoftheweb.salvo.models.*;
-import com.codeoftheweb.salvo.repositories.GamePlayerRepository;
-import com.codeoftheweb.salvo.repositories.GameRepository;
-import com.codeoftheweb.salvo.repositories.PlayerRepository;
-import com.codeoftheweb.salvo.repositories.ShipRepository;
+import com.codeoftheweb.salvo.repositories.*;
 import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,7 +22,8 @@ public class BatallaNavalApplication {
 	public CommandLineRunner initData(PlayerRepository playerRepository,
 									  GameRepository gameRepository,
 									  GamePlayerRepository gamePlayerRepository,
-									  ShipRepository shipRepository
+									  ShipRepository shipRepository,
+									  SalvoRepository salvoRepository
 									  ) {
 		return (args) -> {
 			// save a couple of customers
@@ -48,18 +46,23 @@ public class BatallaNavalApplication {
 
 			Ship shipCarrier = shipRepository.save(new Ship(ShipType.Carrier, Arrays.asList("H2","H3","H4","H5","H6"),gamePlayer));
 			Ship shipBattleship = shipRepository.save(new Ship(ShipType.Battleship, Arrays.asList("C1","D1","E1","F1"), gamePlayer));
-			Ship shipDestroyer = shipRepository.save(new Ship(ShipType.Destroyer, Arrays.asList("H2","H3","H4"),gamePlayer));
+			Ship shipDestroyer = shipRepository.save(new Ship(ShipType.Destroyer, Arrays.asList("J2","J3","J4"),gamePlayer));
 			Ship shipCruiser2 = shipRepository.save(new Ship(ShipType.Cruiser, Arrays.asList("A10","B10","C10"),gamePlayer2));
 			Ship shipPatrolBoat2 = shipRepository.save(new Ship(ShipType.PatrolBoat, Arrays.asList("B4","B5"), gamePlayer2));
-			Ship shipBattleship2 = shipRepository.save(new Ship(ShipType.Battleship, Arrays.asList("B4","B5","B6","B7"), gamePlayer2));
+			Ship shipBattleship2 = shipRepository.save(new Ship(ShipType.Battleship, Arrays.asList("C4","C5","C6","C7"), gamePlayer2));
 
-			gamePlayer.addShip(shipCarrier);
+/*			gamePlayer.addShip(shipCarrier);
 			gamePlayer.addShip(shipBattleship);
 			gamePlayer.addShip(shipDestroyer);
 
 			gamePlayer2.addShip(shipCruiser2);
 			gamePlayer2.addShip(shipPatrolBoat2);
-			gamePlayer2.addShip(shipBattleship2);
+			gamePlayer2.addShip(shipBattleship2);*/
+
+			Salvo salvo = salvoRepository.save(new Salvo(gamePlayer, Arrays.asList("B5", "C5", "F1"), 1));
+			Salvo salvo2 = salvoRepository.save(new Salvo(gamePlayer, Arrays.asList("F2", "D5"), 2));
+			Salvo salvo3 = salvoRepository.save(new Salvo(gamePlayer2, Arrays.asList("B4", "B5", "B6"), 1));
+			Salvo salvo4 = salvoRepository.save(new Salvo(gamePlayer2, Arrays.asList("E1", "H3", "A2"), 2));
 
 		};
 	}

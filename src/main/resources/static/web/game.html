@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> GAME </title>
+    <link rel="stylesheet" href="../css/game.css">
+</head>
+
+<body>
+    <div id="app">
+        <h1>Ship Locations</h1>
+        <h2>{{email}} (you) vs {{emailContrincant}}</h2>
+        <table id="salvoes">
+            <thead>
+                <tr>
+                    <th> </th>
+                    <th v-for="col in columns">{{col}}</th>
+                </tr>
+            </thead>
+            <!--  -->
+            <tbody>
+                <tr v-for="row in rows">
+                    <td>{{row}}</td>
+                    <td v-for="col in columns" :id="row+col" :class="salvoesPositions.includes(row+col) ? 'Salvoes' : null" ></td>
+                </tr>
+                <!--  -->
+            </tbody>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th> </th>
+                    <th v-for="col in columns">{{col}}</th>
+                </tr>
+            </thead>
+            <!--  -->
+            <tbody>
+                <tr v-for="row in rows">
+                    <td>{{row}}</td>
+                    <td v-for="col in columns" :id="row+col" :class="salvoesContrincant.includes(row+col) ? 'salvoesContrincants' : null || shipsPositions.includes(row+col) ? 'Ship' : null"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="../js/game.js"> </script>
+</body>
+
+</html>

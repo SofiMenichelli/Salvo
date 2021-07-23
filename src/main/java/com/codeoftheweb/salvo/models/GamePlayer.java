@@ -3,9 +3,8 @@ package com.codeoftheweb.salvo.models;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class GamePlayer {
@@ -25,7 +24,10 @@ public class GamePlayer {
     private Player player;
 
     @OneToMany(mappedBy="gamePlayer", fetch=FetchType.EAGER)
-    List<Ship> ships = new ArrayList<>();
+    Set<Ship> ships = new HashSet<>();
+
+    @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
+    Set<Salvo> salvos = new HashSet<>();
 
     public GamePlayer() {
     }
@@ -64,12 +66,20 @@ public class GamePlayer {
         this.player = player;
     }
 
-    public List<Ship> getShips() { return ships; }
+    public Set<Ship> getShips() { return ships; }
 
-    public void setShips(List<Ship> ships) { this.ships = ships; }
+    public void setShips(Set<Ship> ships) { this.ships = ships; }
+
+    public Set<Salvo> getSalvos() { return salvos; }
+
+    public void setSalvos(Set<Salvo> salvos) { this.salvos = salvos; }
 
     public void addShip(Ship ship) {
         ship.setGamePlayer(this);
         ships.add(ship);
+    }
+    public void addSalvo(Salvo salvo) {
+        salvo.setGamePlayer(this);
+        salvos.add(salvo);
     }
 }

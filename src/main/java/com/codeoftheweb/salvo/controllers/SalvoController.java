@@ -1,9 +1,7 @@
 package com.codeoftheweb.salvo.controllers;
 
-import com.codeoftheweb.salvo.models.Game;
-import com.codeoftheweb.salvo.models.GamePlayer;
-import com.codeoftheweb.salvo.models.Player;
-import com.codeoftheweb.salvo.models.Ship;
+import com.codeoftheweb.salvo.models.*;
+import com.codeoftheweb.salvo.repositories.GamePlayerRepository;
 import com.codeoftheweb.salvo.repositories.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +19,9 @@ public class SalvoController {
 
     @Autowired
     GameRepository gameRepository;
+
+    @Autowired
+    GamePlayerRepository gamePlayerRepository;
 
    /* @RequestMapping("/games")
     public List<Long> getAllIds() {
@@ -43,6 +44,11 @@ public class SalvoController {
           return makeGameDTO(gameRepository.findById(id).get());
     }
 
+    @RequestMapping("/game_view/{id}")
+    public Map<String, Object> getGamePlayerById(@PathVariable long id) {
+        return makeGamePlayerDTO(gamePlayerRepository.findById(id).get());
+    }
+
     public Map<String, Object> makeGameDTO(Game game) {
         Map<String, Object> gameDTO = new HashMap<>();
             gameDTO.put("Game Players", game.getGamePlayers().stream().map(gamePlayer -> makeGamePlayerDTO(gamePlayer)).collect(Collectors.toList()));
@@ -61,6 +67,8 @@ public class SalvoController {
         Map<String, Object> gamePlayerDTO = new HashMap<>();
         gamePlayerDTO.put("id", gamePlayer.getId());
         gamePlayerDTO.put("player", makePlayerDTO(gamePlayer.getPlayer()));
+        gamePlayerDTO.put("ships", gamePlayer.getShips().stream().map(this::makeShipDTO).collect(Collectors.toList()));
+        gamePlayerDTO.put("salvoes", gamePlayer.getSalvos().stream().map(this::makeSalvoDTO));
         return gamePlayerDTO;
     }
     public Map<String,Object> makeShipDTO(Ship ship) {
@@ -68,6 +76,12 @@ public class SalvoController {
         shipDTO.put("Type", ship.getShipType());
         shipDTO.put("Locations", ship.getLocations());
         return  shipDTO;
+    }
+    public Map<String,Object> makeSalvoDTO(Salvo salvo) {
+        Map<String, Object> salvoDTO = new HashMap<>();
+        salvoDTO.put("turn", salvo.getTurn());
+        salvoDTO.put("Locations", salvo.getSalvoLocations());
+        return  salvoDTO;
     }
 
 
