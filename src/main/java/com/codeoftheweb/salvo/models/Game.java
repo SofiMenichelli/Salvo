@@ -1,5 +1,6 @@
 package com.codeoftheweb.salvo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,7 +21,16 @@ public class Game {
     @OneToMany(mappedBy="game", fetch=FetchType.EAGER)
     Set<GamePlayer> gamePlayers = new HashSet<>();
 
+    @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
+    Set<Score> scores = new HashSet<>();
+
     public Game() {
+    }
+
+    public Game(LocalDateTime date, Set<GamePlayer> gamePlayers, Set<Score> scores) {
+        this.date = date;
+        this.gamePlayers = gamePlayers;
+        this.scores = scores;
     }
 
     public Game(LocalDateTime date) {
@@ -47,8 +57,12 @@ public class Game {
         this.gamePlayers = gamePlayers;
     }
 
-    public List<Player> getGames() {
-        return gamePlayers.stream().map(player -> player.getPlayer()).collect(Collectors.toList());
+    public Set<Score> getScores() { return scores; }
+
+    public void setScores(Set<Score> scores) { this.scores = scores; }
+
+    public Set<Player> getGames() {
+        return gamePlayers.stream().map(GamePlayer::getPlayer).collect(Collectors.toSet());
     }
 
     public void gamePlayer(GamePlayer gamePlayer) {

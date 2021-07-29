@@ -1,24 +1,45 @@
+.tables {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
 table {
-    margin: auto;
-    width: 40vw;
-    height: 40vh;
+    background-image: url('../assets/fondoTabla.jpg');
+    background-size: cover;
+    min-width: 30vw;
+    height: 30vh;
     border: 2px solid rgb(236, 109, 109);
     border-collapse: collapse;
 }
 tr, td, th {
-    width: 3vw;
-    height: 3vh;
+    width: 40px;
+    height: 40px;
     border: 3px solid rgb(243, 131, 131);
     text-align: center;
-}
-.Ship {
-    background-color: green;
-}
-.Salvoes {
-    background-color: violet;
-    color: black;
+    color: white;
     font-weight: bold;
 }
+.Ship {
+    background-image: url('../assets/barco.png');
+    background-size: cover;
+}
+.Salvoes {
+    background-color: lightblue;
+    background-image: url('../assets/splashAgua.png');
+    background-size: cover;
+}
 .salvoesContrincants {
-    background-color: yellow;
+    background-image: url('../assets/fuego.gif');
+    background-size: contain;
+}
+.salvoesContrincantsError {
+    background-color: lightblue;
+      background-image: url('../assets/splashAgua.png');
+    background-size: cover;
+}
+.SalvoesActive {
+    background-image: url('../assets/fuego.gif');
+    background-size: contain;
 }

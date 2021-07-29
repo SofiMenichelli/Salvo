@@ -2,17 +2,21 @@ package com.codeoftheweb.salvo;
 
 import com.codeoftheweb.salvo.models.*;
 import com.codeoftheweb.salvo.repositories.*;
-import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @SpringBootApplication
 public class BatallaNavalApplication {
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BatallaNavalApplication.class, args);
@@ -23,14 +27,15 @@ public class BatallaNavalApplication {
 									  GameRepository gameRepository,
 									  GamePlayerRepository gamePlayerRepository,
 									  ShipRepository shipRepository,
-									  SalvoRepository salvoRepository
+									  SalvoRepository salvoRepository,
+									  ScoreRepository scoreRepository
 									  ) {
 		return (args) -> {
 			// save a couple of customers
-			Player player1 =playerRepository.save(new Player("Jack Bauer", "j.bauer@ctu.gov", "24"));
-			Player player2 = playerRepository.save(new Player("Chloe O'Brian", "c.obrian@ctu.gov", "42"));
-			Player player3 = playerRepository.save(new Player("Kim Bauer", "kim_bauer@gmail.com", "kb"));
-			Player player4 = playerRepository.save(new Player("Tony Almeida", "t.almeida@ctu.gov", "mole"));
+			Player player1 =playerRepository.save(new Player("j.bauer@ctu.gov", passwordEncoder.encode("24")));
+			Player player2 = playerRepository.save(new Player("c.obrian@ctu.gov", passwordEncoder.encode("42")));
+			Player player3 = playerRepository.save(new Player("kim_bauer@gmail.com", passwordEncoder.encode("kb")));
+			Player player4 = playerRepository.save(new Player("t.almeida@ctu.gov", passwordEncoder.encode("mole")));
 
 
 			Game game1 = gameRepository.save(new Game(LocalDateTime.now()));
@@ -51,18 +56,18 @@ public class BatallaNavalApplication {
 			Ship shipPatrolBoat2 = shipRepository.save(new Ship(ShipType.PatrolBoat, Arrays.asList("B4","B5"), gamePlayer2));
 			Ship shipBattleship2 = shipRepository.save(new Ship(ShipType.Battleship, Arrays.asList("C4","C5","C6","C7"), gamePlayer2));
 
-/*			gamePlayer.addShip(shipCarrier);
-			gamePlayer.addShip(shipBattleship);
-			gamePlayer.addShip(shipDestroyer);
-
-			gamePlayer2.addShip(shipCruiser2);
-			gamePlayer2.addShip(shipPatrolBoat2);
-			gamePlayer2.addShip(shipBattleship2);*/
 
 			Salvo salvo = salvoRepository.save(new Salvo(gamePlayer, Arrays.asList("B5", "C5", "F1"), 1));
 			Salvo salvo2 = salvoRepository.save(new Salvo(gamePlayer, Arrays.asList("F2", "D5"), 2));
 			Salvo salvo3 = salvoRepository.save(new Salvo(gamePlayer2, Arrays.asList("B4", "B5", "B6"), 1));
 			Salvo salvo4 = salvoRepository.save(new Salvo(gamePlayer2, Arrays.asList("E1", "H3", "A2"), 2));
+
+			scoreRepository.save(new Score(1, LocalDateTime.now(), player1, game1));
+			scoreRepository.save(new Score(0, LocalDateTime.now(), player2, game1));
+			scoreRepository.save(new Score(0, LocalDateTime.now(), player1, game2));
+			scoreRepository.save(new Score(1, LocalDateTime.now(), player2, game2));
+			scoreRepository.save(new Score(0.5, LocalDateTime.now(), player1, game3));
+			scoreRepository.save(new Score(0.5, LocalDateTime.now(), player4, game3));
 
 		};
 	}

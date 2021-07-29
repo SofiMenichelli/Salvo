@@ -1,9 +1,11 @@
 package com.codeoftheweb.salvo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -82,4 +84,8 @@ public class GamePlayer {
         salvo.setGamePlayer(this);
         salvos.add(salvo);
     }
+    public Score getScore (){
+        return this.player.getGameScore(this.game);
+    }
+
 }

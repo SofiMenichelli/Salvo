@@ -11,39 +11,56 @@
 
 <body>
     <div id="app">
-        <h1>Ship Locations</h1>
-        <h2>{{email}} (you) vs {{emailContrincant}}</h2>
-        <table id="salvoes">
-            <thead>
-                <tr>
-                    <th> </th>
-                    <th v-for="col in columns">{{col}}</th>
-                </tr>
-            </thead>
-            <!--  -->
-            <tbody>
-                <tr v-for="row in rows">
-                    <td>{{row}}</td>
-                    <td v-for="col in columns" :id="row+col" :class="salvoesPositions.includes(row+col) ? 'Salvoes' : null" ></td>
-                </tr>
+        <header>
+            <div class="title">
+                <h1>Ship Locations</h1>
+                <h2>{{email}} (you) vs {{emailContrincant}}</h2>
+            </div>
+            <div class="logOut">
+                <button @click="logOut">Log Out</button>
+            </div>
+
+        </header>
+        <div class="tables">
+            <table>
+                <h1>Mi tabla</h1>
+                <thead>
+                    <tr>
+                        <th> </th>
+                        <th v-for="col in columns">{{col}}</th>
+                    </tr>
+                </thead>
                 <!--  -->
-            </tbody>
-        </table>
-        <table>
-            <thead>
-                <tr>
-                    <th> </th>
-                    <th v-for="col in columns">{{col}}</th>
-                </tr>
-            </thead>
-            <!--  -->
-            <tbody>
-                <tr v-for="row in rows">
-                    <td>{{row}}</td>
-                    <td v-for="col in columns" :id="row+col" :class="salvoesContrincant.includes(row+col) ? 'salvoesContrincants' : null || shipsPositions.includes(row+col) ? 'Ship' : null"></td>
-                </tr>
-            </tbody>
-        </table>
+                <tbody>
+                    <tr v-for="row in rows">
+                        <td>{{row}}</td>
+                        <td v-for="col in columns" :id="row+col" 
+                        :class="salvoesContrincant.includes(row+col) && shipsPositions.includes(row+col) ? 'salvoesContrincants' : null 
+                        || salvoesContrincant.includes(row+col) ? 'salvoesContrincantsError' : null 
+                        || shipsPositions.includes(row+col) ? 'Ship' : null"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table id="salvoes">
+                
+                <h1>Mis Golpes</h1>
+                <thead>
+                    <tr>
+                        <th> </th>
+                        <th v-for="col in columns">{{col}}</th>
+                    </tr>
+                </thead>
+                <!--  -->
+                <tbody>
+                    <tr v-for="row in rows">
+                        <td>{{row}}</td>
+                        <td v-for="col in columns" :id="row+col" :class="shipsPositionsContricant.includes(row+col) && salvoesPositions.includes(row+col) ? 'SalvoesActive' : null 
+                        || salvoesPositions.includes(row+col) ? 'Salvoes' : null"></td>
+                    </tr>
+                    <!--  -->
+                </tbody>
+            </table>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@next"></script>
